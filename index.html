@@ -194,10 +194,10 @@
             {
                 title: "数据查看",
                 desc: "查看汇总报表与分析",
-                // 使用 AppLink 强制在飞书 App 内以原生方式打开，解决 WebView 版本过低问题
-                url: "https://applink.feishu.cn/client/docs/open?url=https%3A%2F%2Fmcn8z5zkn1li.feishu.cn%2Fbase%2FNs8ib6L9QaLVqdsFLzecc2PQn9e%3Ffrom%3Dfrom_copylink",
+                url: "https://mcn8z5zkn1li.feishu.cn/base/Ns8ib6L9QaLVqdsFLzecc2PQn9e?from=from_copylink",
                 icon: "📊",
-                colorClass: "icon-bg-purple"
+                colorClass: "icon-bg-purple",
+                useAppLinkOnMobile: true // 开启此选项：手机端用 AppLink 原生打开，PC 端用普通链接
             }
             // 如需新增，复制上面的一个 {} 块，修改内容即可
         ];
@@ -206,13 +206,25 @@
         // 渲染逻辑 (无需修改)
         // ==========================================
         const listContainer = document.getElementById('linkList');
+        
+        // 检测是否为移动端设备
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
         // 简单的 SVG 箭头图标
         const arrowIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
         links.forEach(item => {
             const a = document.createElement('a');
-            a.href = item.url;
+            
+            // 智能链接处理：
+            // 如果配置了 useAppLinkOnMobile 且当前是移动端，则转换为 AppLink 协议
+            // 否则保持原始 URL (PC端或普通链接)
+            if (isMobile && item.useAppLinkOnMobile) {
+                a.href = `https://applink.feishu.cn/client/docs/open?url=${encodeURIComponent(item.url)}`;
+            } else {
+                a.href = item.url;
+            }
+
             a.className = 'link-card';
             // 在飞书中打开通常不需要 _blank，但如果是外部链接建议加上。这里默认当前页打开体验更好。
             
