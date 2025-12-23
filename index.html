@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>三象互动数据填报</title>
+    <style>
+        :root {
+            --primary-color: #3370ff; /* 飞书蓝 */
+            --bg-color: #f5f6f7;
+            --card-bg: #ffffff;
+            --text-main: #1f2329;
+            --text-sub: #8f959e;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px; /* 限制最大宽度，模拟手机视口 */
+            padding: 20px 16px;
+            flex: 1;
+        }
+
+        /* Header 样式 */
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+            padding-top: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            margin-bottom: 12px;
+            border-radius: 16px;
+            background: #fff;
+            padding: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* 链接列表样式 */
+        .link-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            color: inherit;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card:active {
+            transform: scale(0.98);
+            background-color: #fafafa;
+        }
+
+        .card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        /* 为不同类型的图标设置背景色 */
+        .icon-bg-blue { background-color: #e1eaff; color: #3370ff; }
+        .icon-bg-green { background-color: #e3f9e9; color: #26b456; }
+        .icon-bg-orange { background-color: #fff1dc; color: #ff8800; }
+        .icon-bg-purple { background-color: #f0e6ff; color: #722ed1; }
+
+        .card-content {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .card-arrow {
+            color: #c2c5cc;
+            margin-left: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: auto;
+            padding: 24px 0;
+            text-align: center;
+            font-size: 12px;
+            color: #c2c5cc;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <!-- 这里引用您的 Logo 图片，请确保图片文件名为 logo.png 或 logo.jpg -->
+            <img src="logo.jpg" alt="三象互动" class="logo"> 
+            
+            <h1 class="title">三象互动数据填报</h1>
+            <p class="subtitle">工作台快捷入口</p>
+        </header>
+
+        <div id="linkList" class="link-list">
+            <!-- 列表内容将由 JavaScript 自动生成 -->
+        </div>
+
+        <footer class="footer">
+            © 三象互动 · 内部效率工具
+        </footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // 配置区域：在这里添加或修改您的链接
+        // ==========================================
+        const links = [
+            {
+                title: "拜访记录填报",
+                desc: "记录每日客户拜访详情",
+                url: "https://mcn8z5zkn1li.feishu.cn/share/base/form/shrcne4j2Zm4SRFd0YrARMZD02d",
+                icon: "📝", // 您可以使用 Emoji，也可以后续换成 SVG
+                colorClass: "icon-bg-blue" // 可选: icon-bg-blue, icon-bg-green, icon-bg-orange, icon-bg-purple
+            },
+            {
+                title: "商家收款",
+                desc: "商家打款及财务记录",
+                url: "https://mcn8z5zkn1li.feishu.cn/share/base/form/shrcn8m72s8u0rXYXZRZN7Gr9bb",
+                icon: "💰",
+                colorClass: "icon-bg-orange"
+            },
+            {
+                title: "策略池提报",
+                desc: "提交新的运营策略方案",
+                url: "https://mcn8z5zkn1li.feishu.cn/share/base/form/shrcnZrhA2uvuaetZJZD8P1KPoe",
+                icon: "💡",
+                colorClass: "icon-bg-green"
+            },
+            {
+                title: "数据查看",
+                desc: "查看汇总报表与分析",
+                url: "https://mcn8z5zkn1li.feishu.cn/base/Ns8ib6L9QaLVqdsFLzecc2PQn9e?table=blksrtHf9CO07ABl",
+                icon: "📊",
+                colorClass: "icon-bg-purple"
+            }
+            // 如需新增，复制上面的一个 {} 块，修改内容即可
+        ];
+
+        // ==========================================
+        // 渲染逻辑 (无需修改)
+        // ==========================================
+        const listContainer = document.getElementById('linkList');
+
+        // 简单的 SVG 箭头图标
+        const arrowIcon = `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+        links.forEach(item => {
+            const a = document.createElement('a');
+            a.href = item.url;
+            a.className = 'link-card';
+            // 在飞书中打开通常不需要 _blank，但如果是外部链接建议加上。这里默认当前页打开体验更好。
+            
+            a.innerHTML = `
+                <div class="card-icon ${item.colorClass || 'icon-bg-blue'}">
+                    ${item.icon}
+                </div>
+                <div class="card-content">
+                    <div class="card-title">${item.title}</div>
+                    <div class="card-desc">${item.desc}</div>
+                </div>
+                <div class="card-arrow">
+                    ${arrowIcon}
+                </div>
+            `;
+            listContainer.appendChild(a);
+        });
+    </script>
+</body>
+</html>
