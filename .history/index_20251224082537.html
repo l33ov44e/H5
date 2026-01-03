@@ -7,16 +7,12 @@
     <style>
         :root {
             --primary-color: #3370ff; /* 飞书蓝 */
-            --primary-light: #e8f0ff;
-            --bg-color: #f0f2f5;
-            --card-bg: rgba(255, 255, 255, 0.85);
+            --bg-color: #f5f6f7;
+            --card-bg: #ffffff;
             --text-main: #1f2329;
-            --text-sub: #646a73;
-            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 8px 30px rgba(51, 112, 255, 0.15);
-            --radius: 16px;
-            --gradient-blue: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --gradient-header: linear-gradient(135deg, #3370ff 0%, #5b8def 50%, #667eea 100%);
+            --text-sub: #8f959e;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            --radius: 12px;
         }
 
         * {
@@ -27,10 +23,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Noto Sans SC", sans-serif;
-            background: linear-gradient(180deg, #e8f0ff 0%, #f0f2f5 30%, #f5f6f7 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            line-height: 1.5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -39,234 +35,113 @@
 
         .container {
             width: 100%;
-            max-width: 480px;
-            padding: 0 16px 20px;
+            max-width: 480px; /* 限制最大宽度，模拟手机视口 */
+            padding: 20px 16px;
             flex: 1;
         }
 
-        /* Header 样式 - 现代化渐变设计 */
+        /* Header 样式 */
         .header {
             text-align: center;
-            margin-bottom: 28px;
-            padding: 32px 20px 28px;
-            background: var(--gradient-header);
-            border-radius: 0 0 32px 32px;
-            margin-left: -16px;
-            margin-right: -16px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-            animation: shimmer 8s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { transform: translateX(-30%) translateY(-30%); }
-            50% { transform: translateX(30%) translateY(30%); }
+            margin-bottom: 32px;
+            padding-top: 20px;
         }
 
         .logo {
-            width: 72px;
-            height: 72px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
-            margin-bottom: 14px;
-            border-radius: 18px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 10px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(10px);
+            margin-bottom: 12px;
+            border-radius: 16px;
+            background: #fff;
+            padding: 8px;
+            box-shadow: var(--shadow);
         }
 
         .title {
-            font-size: 22px;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            position: relative;
-            z-index: 1;
-            letter-spacing: 0.5px;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-main);
         }
 
         .subtitle {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.85);
-            margin-top: 6px;
-            position: relative;
-            z-index: 1;
-            font-weight: 400;
+            font-size: 14px;
+            color: var(--text-sub);
+            margin-top: 4px;
         }
 
         /* 链接列表样式 */
         .link-list {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
         }
 
         .link-card {
             display: flex;
             align-items: center;
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 18px 20px;
+            padding: 20px;
             border-radius: var(--radius);
             text-decoration: none;
             color: inherit;
             box-shadow: var(--shadow);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-
-        .link-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .link-card:hover::before {
-            left: 100%;
-        }
-
-        .link-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-hover);
-            border-color: rgba(51, 112, 255, 0.3);
         }
 
         .link-card:active {
-            transform: scale(0.98) translateY(0);
-            background-color: rgba(255, 255, 255, 0.9);
+            transform: scale(0.98);
+            background-color: #fafafa;
         }
 
         .card-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 16px;
             font-size: 24px;
             flex-shrink: 0;
-            position: relative;
-            transition: transform 0.3s ease;
         }
 
-        .link-card:hover .card-icon {
-            transform: scale(1.08);
-        }
-
-        /* 为不同类型的图标设置渐变背景色 */
-        .icon-bg-blue { 
-            background: linear-gradient(135deg, #e8f0ff 0%, #d6e4ff 100%); 
-            color: #3370ff;
-            box-shadow: 0 4px 12px rgba(51, 112, 255, 0.15);
-        }
-        .icon-bg-green { 
-            background: linear-gradient(135deg, #e6f7ed 0%, #d0f0dd 100%); 
-            color: #00b96b;
-            box-shadow: 0 4px 12px rgba(0, 185, 107, 0.15);
-        }
-        .icon-bg-orange { 
-            background: linear-gradient(135deg, #fff4e6 0%, #ffe8cc 100%); 
-            color: #fa8c16;
-            box-shadow: 0 4px 12px rgba(250, 140, 22, 0.15);
-        }
-        .icon-bg-purple { 
-            background: linear-gradient(135deg, #f3e8ff 0%, #e6d6ff 100%); 
-            color: #722ed1;
-            box-shadow: 0 4px 12px rgba(114, 46, 209, 0.15);
-        }
+        /* 为不同类型的图标设置背景色 */
+        .icon-bg-blue { background-color: #e1eaff; color: #3370ff; }
+        .icon-bg-green { background-color: #e3f9e9; color: #26b456; }
+        .icon-bg-orange { background-color: #fff1dc; color: #ff8800; }
+        .icon-bg-purple { background-color: #f0e6ff; color: #722ed1; }
 
         .card-content {
             flex: 1;
-            min-width: 0;
         }
 
         .card-title {
             font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--text-main);
+            font-weight: 500;
+            margin-bottom: 2px;
         }
 
         .card-desc {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-sub);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .card-arrow {
-            color: #bfc3cc;
-            margin-left: 12px;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .link-card:hover .card-arrow {
-            transform: translateX(4px);
-            color: var(--primary-color);
+            color: #c2c5cc;
+            margin-left: 8px;
         }
 
         /* Footer */
         .footer {
             margin-top: auto;
-            padding: 28px 0 24px;
+            padding: 24px 0;
             text-align: center;
             font-size: 12px;
-            color: #a8adb5;
+            color: #c2c5cc;
         }
-
-        .footer-divider {
-            width: 40px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #d9dce0, transparent);
-            margin: 0 auto 12px;
-            border-radius: 2px;
-        }
-
-        /* 添加入场动画 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .link-card {
-            animation: fadeInUp 0.5s ease forwards;
-            opacity: 0;
-        }
-
-        .link-card:nth-child(1) { animation-delay: 0.1s; }
-        .link-card:nth-child(2) { animation-delay: 0.2s; }
-        .link-card:nth-child(3) { animation-delay: 0.3s; }
-        .link-card:nth-child(4) { animation-delay: 0.4s; }
-        .link-card:nth-child(5) { animation-delay: 0.5s; }
-        .link-card:nth-child(6) { animation-delay: 0.6s; }
 
     </style>
 </head>
@@ -286,7 +161,6 @@
         </div>
 
         <footer class="footer">
-            <div class="footer-divider"></div>
             © 三象互动 · 内部效率工具
         </footer>
     </div>
