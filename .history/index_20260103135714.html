@@ -437,8 +437,9 @@
         });
 
         // ==========================================
-        // 日期时间显示（简洁版）
+        // 日期时间显示（带特效）
         // ==========================================
+        let lastTimeStr = '';
         
         function updateDateTime() {
             const now = new Date();
@@ -448,30 +449,43 @@
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             
+            const currentTimeStr = `${hours}${minutes}`;
             const dateTimeEl = document.getElementById('currentDateTime');
             
-            // 简洁的日期时间显示（无频繁动画）
+            // 构建带特效的 HTML
             const html = `
                 <span class="datetime-display">
                     <span class="date-part">${year}年</span>
                     <span class="date-part">${month}月</span>
                     <span class="date-part">${day}日</span>
                     <span class="date-part" style="margin-left: 8px;">
-                        <span class="time-num">${hours}</span>
+                        <span class="time-num" id="hour1">${hours[0]}</span><span class="time-num" id="hour2">${hours[1]}</span>
                     </span>
                     <span class="time-separator">:</span>
                     <span class="date-part">
-                        <span class="time-num">${minutes}</span>
+                        <span class="time-num" id="min1">${minutes[0]}</span><span class="time-num" id="min2">${minutes[1]}</span>
                     </span>
                 </span>
             `;
             
-            dateTimeEl.innerHTML = html;
+            // 如果时间变化，添加翻转动画
+            if (lastTimeStr && lastTimeStr !== currentTimeStr) {
+                dateTimeEl.innerHTML = html;
+                // 检测哪些数字变化了并添加动画
+                if (lastTimeStr[0] !== currentTimeStr[0]) document.getElementById('hour1')?.classList.add('flip');
+                if (lastTimeStr[1] !== currentTimeStr[1]) document.getElementById('hour2')?.classList.add('flip');
+                if (lastTimeStr[2] !== currentTimeStr[2]) document.getElementById('min1')?.classList.add('flip');
+                if (lastTimeStr[3] !== currentTimeStr[3]) document.getElementById('min2')?.classList.add('flip');
+            } else {
+                dateTimeEl.innerHTML = html;
+            }
+            
+            lastTimeStr = currentTimeStr;
         }
         
-        // 初始化并每分钟更新一次（减少更新频率）
+        // 初始化并每秒检查更新（让冒号闪烁更流畅）
         updateDateTime();
-        setInterval(updateDateTime, 60000);
+        setInterval(updateDateTime, 1000);
     </script>
 </body>
 </html>
