@@ -106,97 +106,6 @@
             font-weight: 400;
         }
 
-        /* 日期时间特效样式 */
-        .datetime-display {
-            display: inline-flex;
-            align-items: center;
-            gap: 2px;
-            font-family: 'SF Mono', 'Menlo', 'Monaco', 'Consolas', monospace;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
-            animation: fadeInGlow 1s ease-out;
-        }
-
-        .datetime-display .date-part {
-            opacity: 0;
-            animation: slideInFade 0.5s ease forwards;
-        }
-
-        .datetime-display .date-part:nth-child(1) { animation-delay: 0.1s; }
-        .datetime-display .date-part:nth-child(2) { animation-delay: 0.2s; }
-        .datetime-display .date-part:nth-child(3) { animation-delay: 0.3s; }
-        .datetime-display .date-part:nth-child(4) { animation-delay: 0.4s; }
-        .datetime-display .date-part:nth-child(5) { animation-delay: 0.5s; }
-
-        .datetime-display .time-separator {
-            animation: blink 1s ease-in-out infinite;
-            font-weight: 700;
-        }
-
-        .datetime-display .time-num {
-            display: inline-block;
-            min-width: 1.2em;
-            text-align: center;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .datetime-display .time-num.flip {
-            animation: flipNumber 0.4s ease;
-        }
-
-        @keyframes fadeInGlow {
-            0% {
-                opacity: 0;
-                text-shadow: 0 0 0 rgba(255, 255, 255, 0);
-            }
-            100% {
-                opacity: 1;
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
-            }
-        }
-
-        @keyframes slideInFade {
-            0% {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        @keyframes flipNumber {
-            0% {
-                transform: rotateX(0deg);
-                opacity: 1;
-            }
-            50% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                text-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.3);
-            }
-            50% {
-                text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
-            }
-        }
-
         /* 链接列表样式 */
         .link-list {
             display: flex;
@@ -468,10 +377,8 @@
         });
 
         // ==========================================
-        // 日期时间显示（带特效）
+        // 日期时间显示
         // ==========================================
-        let lastTimeStr = '';
-        
         function updateDateTime() {
             const now = new Date();
             const year = now.getFullYear();
@@ -480,43 +387,13 @@
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             
-            const currentTimeStr = `${hours}${minutes}`;
-            const dateTimeEl = document.getElementById('currentDateTime');
-            
-            // 构建带特效的 HTML
-            const html = `
-                <span class="datetime-display">
-                    <span class="date-part">${year}年</span>
-                    <span class="date-part">${month}月</span>
-                    <span class="date-part">${day}日</span>
-                    <span class="date-part" style="margin-left: 8px;">
-                        <span class="time-num" id="hour1">${hours[0]}</span><span class="time-num" id="hour2">${hours[1]}</span>
-                    </span>
-                    <span class="time-separator">:</span>
-                    <span class="date-part">
-                        <span class="time-num" id="min1">${minutes[0]}</span><span class="time-num" id="min2">${minutes[1]}</span>
-                    </span>
-                </span>
-            `;
-            
-            // 如果时间变化，添加翻转动画
-            if (lastTimeStr && lastTimeStr !== currentTimeStr) {
-                dateTimeEl.innerHTML = html;
-                // 检测哪些数字变化了并添加动画
-                if (lastTimeStr[0] !== currentTimeStr[0]) document.getElementById('hour1')?.classList.add('flip');
-                if (lastTimeStr[1] !== currentTimeStr[1]) document.getElementById('hour2')?.classList.add('flip');
-                if (lastTimeStr[2] !== currentTimeStr[2]) document.getElementById('min1')?.classList.add('flip');
-                if (lastTimeStr[3] !== currentTimeStr[3]) document.getElementById('min2')?.classList.add('flip');
-            } else {
-                dateTimeEl.innerHTML = html;
-            }
-            
-            lastTimeStr = currentTimeStr;
+            const dateTimeStr = `${year}年${month}月${day}日 ${hours}:${minutes}`;
+            document.getElementById('currentDateTime').textContent = dateTimeStr;
         }
         
-        // 初始化并每秒检查更新（让冒号闪烁更流畅）
+        // 初始化并每分钟更新一次
         updateDateTime();
-        setInterval(updateDateTime, 1000);
+        setInterval(updateDateTime, 60000);
     </script>
 </body>
 </html>
